@@ -14,6 +14,8 @@ use App\Http\Controllers\admin\bulkcorrection\BulkController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\CandidateController;
 
+// HELLO RANJAN Str::endsWith($haystack, 'needles')
+
 
 /*
 |--------------------------------------------------------------------------
