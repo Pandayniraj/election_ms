@@ -125,7 +125,8 @@ class CandidateController extends Controller
                     $count++;
                 if($count == sizeof($candidatedata)) {
                     $headers = array(
-                        "Content-type"        => "text/csv",
+                        "Content-Encoding"    => "UTF-8",
+                        "Content-type"        => "text/csv; charset=UTF-8",
                         "Content-Disposition" => "attachment;filename=$fileName",
                         "Pragma"              => "no-cache",
                         "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
@@ -136,11 +137,9 @@ class CandidateController extends Controller
                         $file = fopen('php://output', 'w');
                         fputcsv($file, $columns);
                         foreach ($candidates as $key=>$candidate) {
-
-
                             $row['Candidate ID']  = $candidate->candidate_id;
                             $row['Post Name']    = $candidate->getPosts->post_name;
-                            $row['Nepali Name']    = $candidate->nepali_name;
+                            $row['Nepali Name']    =($candidate->nepali_name);
                             $row['English Name']  = $candidate->english_name;
                             fputcsv($file, array($row['Candidate ID'], $row['Post Name'],$row['Nepali Name'],$row['English Name']));
                         }
