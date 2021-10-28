@@ -125,8 +125,12 @@ class CandidateController extends Controller
                     $count++;
                 if($count == sizeof($candidatedata)) {
                     $headers = array(
+<<<<<<< HEAD
                         "Content-Encoding"    => "UTF-8",
                         "Content-type"        => "text/csv; charset=UTF-8",
+=======
+                        "Content-type"        => "text/csv",'text/comma-separated-values',
+>>>>>>> 86d3b34119400fe9c6cf5c77b1d52f94fcf30cfc
                         "Content-Disposition" => "attachment;filename=$fileName",
                         "Pragma"              => "no-cache",
                         "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
