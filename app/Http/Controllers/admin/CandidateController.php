@@ -18,7 +18,17 @@ class CandidateController extends Controller
     {
         $candidates = Candidate::all();
         $posts = Post::all();
-        return view('admin.candidate.index',compact('candidates'));
+        $status = False;
+        foreach($candidates as $candidate)
+         {
+            $sizecandidate=$candidate->candidate_id;
+                if($sizecandidate){
+                    $status = True;
+                }else{
+                    $status = False;
+                }
+          }
+        return view('admin.candidate.index',compact('candidates','status'));
     }
 
     public function createView()
@@ -31,33 +41,28 @@ class CandidateController extends Controller
 
     public function create(Request $req)
     {
-        // $postid = Post::find($req->input('postname'))->id;
-
-        
-        // $createid = Candidate::where('post_id',$req->postname)->orderBy('id', 'DESC')->first();
-        // if(isset($createid)){
-        //     $candidate['cant_id']=$createid->cant_id+1;
-        // }else{
-        //     $candidate['cant_id']=1;
-        // }
+       
+        // $candidate = $req->image;
+       
+        // return response()->json(['status'=>$candidate, 'msg'=>'Image has been cropped successfully.']);
+        if($req->ajax()){
         $candidate['post_id'] = $req->postname;
-        $candidate['nepali_name'] = $req->input('nepname');
-        $candidate['english_name'] = $req->input('engname');
-
-        if ($req->hasFile('photo')) {
-            $file= $req->file('photo');
-            $ext=$file->getClientOriginalName();
-            // $img =Image::make($req->file('photo'))->resize(200,240);
-            $image= base64_encode(file_get_contents($file));
-
-            $candidate['image'] =$image;      
-        }
-
+        $candidate['nepali_name'] = $req->nepaliname;
+        $candidate['english_name'] = $req->englishname;
+            
+        $image_data = $req->image;
+        $image_array_1 = explode(";", $image_data);
+        $image_array_2 = explode(",", $image_array_1[1]);
+        $candidate['image'] =$image_array_2[1];
+       
+        // return response()->json(['status'=>1, 'msg'=>'Image has been cropped successfully.']);
+        }      
+       
         Candidate::create($candidate);
-
         $data = $req->input('nepname');
         $req->session()->flash('name',$data);
-        return redirect(route('admin.candidate.index'));
+        return response()->json(['status'=>1, 'msg'=>'Image has been cropped successfully.']);
+        return redirect()->route('admin.candidate.index');
     }
 
     public function delete($id)
@@ -69,6 +74,7 @@ class CandidateController extends Controller
             File::delete($image);
         }
         $candidate->delete();
+        $this->getCandidate();
         return redirect()->back();
 
     }
@@ -125,12 +131,8 @@ class CandidateController extends Controller
                     $count++;
                 if($count == sizeof($candidatedata)) {
                     $headers = array(
-<<<<<<< HEAD
                         "Content-Encoding"    => "UTF-8",
                         "Content-type"        => "text/csv; charset=UTF-8",
-=======
-                        "Content-type"        => "text/csv",'text/comma-separated-values',
->>>>>>> 86d3b34119400fe9c6cf5c77b1d52f94fcf30cfc
                         "Content-Disposition" => "attachment;filename=$fileName",
                         "Pragma"              => "no-cache",
                         "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0",
@@ -143,7 +145,7 @@ class CandidateController extends Controller
                         foreach ($candidates as $key=>$candidate) {
                             $row['Candidate ID']  = $candidate->candidate_id;
                             $row['Post Name']    = $candidate->getPosts->post_name;
-                            $row['Nepali Name']    =($candidate->nepali_name);
+                            $row['Nepali Name']    =$candidate->nepali_name;
                             $row['English Name']  = $candidate->english_name;
                             fputcsv($file, array($row['Candidate ID'], $row['Post Name'],$row['Nepali Name'],$row['English Name']));
                         }
@@ -177,8 +179,8 @@ class CandidateController extends Controller
             
             $imageName = $getcandidate->candidate_id. '.png';
             $file = base64_decode($getcandidate->image);
-            $resized_image = Image::make($file)->resize(200, 240)->save('uploads/'.$imageName);
-            // $success = file_put_contents(public_path() . '/uploads/' . $imageName, $file);
+            // $resized_image = Image::make($file)->save('uploads/'.$imageName);
+            $success = file_put_contents(public_path() . '/uploads/' . $imageName, $file);
         }
         
 
@@ -203,7 +205,7 @@ class CandidateController extends Controller
     }
 
 
-    public function getCandidate(Request $req)
+    public function getCandidate()
     {
         $getallcandidates= Candidate::all()->groupBy('post_id');
         // dd($getallcandidates);
@@ -238,4 +240,15 @@ class CandidateController extends Controller
         return redirect()->back();
 
     }
+    // function crop(Request $request){
+    //     $path = 'files/';
+    //     $file = $request->file('file');
+    //     $new_image_name = 'UIMG'.date('Ymd').uniqid().'.jpg';
+    //     $upload = $file->move(public_path($path), $new_image_name);
+    //     if($upload){
+    //         return response()->json(['status'=>1, 'msg'=>'Image has been cropped successfully.', 'name'=>$new_image_name]);
+    //     }else{
+    //           return response()->json(['status'=>0, 'msg'=>'Something went wrong, try again later']);
+    //     }
+    //   }
 }

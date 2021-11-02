@@ -25,7 +25,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Max Count</label>
-                    <input type="text" class="form-control" name="count" value="{{$post['max_count']}}" id="exampleInputPassword1" placeholder="Enter Max Count">
+                    <input type="number" min="0" class="form-control" name="count" value="{{$post['max_count']}}" id="exampleInputPassword1" placeholder="Enter Max Count">
                   </div>
                   
                 </div>

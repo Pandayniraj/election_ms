@@ -34,11 +34,15 @@
                 <div class="right d-flex justify-content-between">
                    <button class="btn btn-warning mr-2" onclick="window.location.href = '{{ route('admin.candidate.createview') }}';"><i class="fas fa-plus-square fa-2x mr-2"></i><span style="vertical-align: super;">Add New Candidate</span></a> </button>
                    <form action="{{ route('admin.candidate.getCandidate') }}" method="POST">
-                    @csrf
-                    <button  id="export" class="btn btn-info"  style="padding: 11px;" type="submit">Get Candidate</button>
-                    </form> 
-                    <span data-href="exportdata " id="export" class="btn btn-success mx-2" onclick="exportTasks(event.target);" style="padding: 11px;">Export Data</span>
-                    <span data-href="exportimg " id="export" class="btn btn-success " onclick="exportTasks(event.target);" style="padding: 11px;">Export Image</span>
+                       @csrf
+                       <button id="export" class="btn btn-info"  style="padding: 11px;" type="submit">Get Candidate</button>
+                   </form>    
+
+                   @if($status==True)
+                        <span data-href="exportdata " id="export" class="btn btn-success mx-2" onclick="exportTasks(event.target);" style="padding: 11px;">Export Data</span>
+                        <span data-href="exportimg " id="export" class="btn btn-success " onclick="exportTasks(event.target);" style="padding: 11px;">Export Image</span>
+                   @endif 
+
                 </div>
 
             </div>
@@ -86,3 +90,4 @@
         
     </div>
 @endsection
+

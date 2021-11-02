@@ -32,6 +32,11 @@
 
   {{-- FOR TOASTR ALERTS  --}}
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  {{-- FOR IMAGE CROPPER --}}
+  <link rel="stylesheet" href="{{ asset('croppieimagecrop/croppie.css') }}">
 <style>
   input[type="text"],
   input[type="date"],
@@ -104,7 +109,7 @@
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">Log Count Management System</a>.</strong>
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">Election Management System</a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 3.1.0
@@ -119,6 +124,8 @@
 </div>
 <!-- ./wrapper -->
 
+
+    
 <!-- jQuery -->
 <script src="{{asset("backend/plugins/jquery/jquery.min.js")}}"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -153,6 +160,8 @@
 <script src="{{asset("backend/dist/js/demo.js")}}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{asset("backend/dist/js/pages/dashboard.js")}}"></script>
+{{-- imagecrop --}}
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 
 <script src="{{asset('backend/plugins/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('backend/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
@@ -177,6 +186,7 @@
 {{-- FOR ToastR Alert --}}
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+{{-- imagecrop --}}
 
 
 <script>
@@ -259,6 +269,8 @@
       window.location.href = _url;
    }
 </script>
+
+  @yield('script')
 
 </body>
 </html>

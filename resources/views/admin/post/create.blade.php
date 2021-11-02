@@ -23,7 +23,7 @@
                   </div>
                   <div class="form-group">
                     <label for="exampleInputPassword1">Max Count</label>
-                    <input type="number" class="form-control" name="count" id="exampleInputPassword1" placeholder="Enter Max Count">
+                    <input type="number" class="form-control" min="0" name="count" id="exampleInputPassword1" placeholder="Enter Max Count">
                   </div>
                   
                 </div>
