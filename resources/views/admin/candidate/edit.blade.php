@@ -95,7 +95,7 @@
     $image_crop.croppie('result', {
       type:'canvas',
       size:'viewport'
-    }).then(function(response){
+      }).then(function(response){
       $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': jQuery('meta[name="csrf-token"]').attr('content') } });
       $.ajax({
         type:'PUT',
