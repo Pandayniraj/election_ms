@@ -14,7 +14,7 @@
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         
         <div class="info">
-          <a href="{{ url('dashboard') }}" class="d-block">Admin Dashboard</a>
+          <a href="{{ url('dashboard') }}" class="d-block"> Election Management System</a>
         </div>
       </div>
       
