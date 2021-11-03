@@ -88,7 +88,7 @@
     reader.readAsDataURL(this.files[0]);
   });
   $('.crop_image').click(function(event){
-   
+    event.preventDefault();
     var postname = document.getElementById('post_name').value;
     var nepaliname = document.getElementById('nepali_name').value;
     var englishname = document.getElementById('english_name').value; 
@@ -100,15 +100,12 @@
       $.ajax({
         type:'POST',
         dataType: "json",
-        url:'/candidatecreate',
-        data: {'postname':postname,'nepaliname':nepaliname,'englishname':englishname,'image':response,'_token': $('meta[name="_token"]').attr('content'),},
+        url:'{{route("admin.candidatecreate")}}',
+        data: {'postname':postname,'nepaliname':nepaliname,'englishname':englishname,'image':response,},
         
         success:function(data)
         {
-          window.location.href = "http://localhost:8000/candidatelist";
-          var crop_image = '<img src="'+data.path+'" />';
-          $('#uploaded_image').html(crop_image);
-          console.log(data);
+          window.location.href = '{{route("admin.candidateindex")}}';
         }
       });
     });
@@ -117,3 +114,4 @@
 });  
 </script>
 @endsection
+{{-- http://localhost/EMS/public/candidatecreate --}}

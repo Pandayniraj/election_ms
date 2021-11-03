@@ -52,7 +52,7 @@ Route::get('exportpostdata',[PostController::class,'export'])->name('admin.post.
 
 
 # CANDIDATE
-Route::get('candidatelist',[CandidateController::class,'index'])->name('admin.candidate.index');
+Route::get('/candidatelist',[CandidateController::class,'index'])->name('admin.candidateindex');
 
 Route::get('candidate/createview',[CandidateController::class,'createView'])->name('admin.candidate.createview');
 // Route::post('candidate/create',[CandidateController::class,'create'])->name('admin.candidate.create');
@@ -71,5 +71,5 @@ Route::post('getcandidate',[CandidateController::class,'getCandidate'])->name('a
 Route::get('reset',[CandidateController::class,'reset'])->name('admin.candidate.reset');
 
 // Route::get('upload',[CandidateController::class, 'index']);
-Route::post('candidatecreate',[CandidateController::class, 'create'])->name('candidatecreate');
+Route::post('candidatecreate',[CandidateController::class, 'create'])->name('admin.candidatecreate');
 

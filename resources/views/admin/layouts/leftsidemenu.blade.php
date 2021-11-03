@@ -47,7 +47,7 @@
 
 
           <li class="nav-item">
-            <a href="{{ route('admin.candidate.index') }}" class="nav-link">
+            <a href="{{ route('admin.candidateindex') }}" class="nav-link">
               <i class="fas fa-users mr-4"></i>
               <p>
                 Candidate

@@ -55,14 +55,14 @@ class CandidateController extends Controller
         $image_array_2 = explode(",", $image_array_1[1]);
         $candidate['image'] =$image_array_2[1];
        
-        // return response()->json(['status'=>1, 'msg'=>'Image has been cropped successfully.']);
         }      
        
         Candidate::create($candidate);
-        $data = $req->input('nepname');
-        $req->session()->flash('name',$data);
+        // return redirect()->route('admin.candidateindex');
+
         return response()->json(['status'=>1, 'msg'=>'Image has been cropped successfully.']);
-        return redirect()->route('admin.candidate.index');
+        // $data = $req->input('nepaliname');
+        // $req->session()->flash('name',$data);
     }
 
     public function delete($id)
@@ -91,26 +91,22 @@ class CandidateController extends Controller
         $candidate = Candidate::find($id);
         $postid = Post::find($req->input('postname'))->id;
 
-        $candidate->post_id = $postid;
-        $candidate->nepali_name = $req->input('nepname');
-        $candidate->english_name = $req->input('engname');
-
-        // $pid = sprintf("%02d",$postid);
-        // $canid = sprintf("%03d",$candidate['id']);
-
-        if ($req->hasFile('photo')) {
-            $file= $req->file('photo');
-            $ext=$file->getClientOriginalName();
-            $image= base64_encode(file_get_contents($req->file('photo')));
-
-            $candidate['image'] =$image;      
-        }
-
+        if($req->ajax()){
+            $candidate->post_id = $req->postname;
+            $candidate->nepali_name = $req->nepaliname;
+            $candidate->english_name = $req->englishname;
+                
+            $image_data = $req->image;
+            $image_array_1 = explode(";", $image_data);
+            $image_array_2 = explode(",", $image_array_1[1]);
+            $candidate->image =$image_array_2[1];
+           
+            }    
         $candidate->save();
-
-        $data = $req->input('name');
-        $req->session()->flash('edited',$data);
-        return redirect(route('admin.candidate.index'));
+        return response()->json(['status'=>1, 'msg'=>'Image has been cropped successfully.']);    
+        // $data = $req->input('name');
+        // $req->session()->flash('edited',$data);
+        // return redirect(route('admin.candidate.index'));
 
     }
 
