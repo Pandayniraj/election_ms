@@ -2,17 +2,19 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\admin\mastermanagement\UsermasterController;
-use App\Http\Controllers\admin\mastermanagement\ShipcompanyController;
-use App\Http\Controllers\admin\mastermanagement\VesselController;
-use App\Http\Controllers\admin\mastermanagement\WeatherController;
-use App\Http\Controllers\admin\shipschedule\ShipscheduleController;
-use App\Http\Controllers\admin\workhistory\WorkhistoryController;
-use App\Http\Controllers\admin\manageoutput\OutputController;
-use App\Http\Controllers\admin\bulkcorrection\BulkController;
-
+use App\Http\Controllers\Api\LinkApiController;
+use App\Http\Controllers\DetailController;
 use App\Http\Controllers\admin\PostController;
 use App\Http\Controllers\admin\CandidateController;
+use App\Http\Controllers\admin\bulkcorrection\BulkController;
+use App\Http\Controllers\admin\manageoutput\OutputController;
+use App\Http\Controllers\admin\mastermanagement\VesselController;
+use App\Http\Controllers\admin\workhistory\WorkhistoryController;
+use App\Http\Controllers\admin\mastermanagement\WeatherController;
+
+use App\Http\Controllers\admin\shipschedule\ShipscheduleController;
+use App\Http\Controllers\admin\mastermanagement\UsermasterController;
+use App\Http\Controllers\admin\mastermanagement\ShipcompanyController;
 
 // HELLO RANJAN Str::endsWith($haystack, 'needles')
 
@@ -28,13 +30,18 @@ use App\Http\Controllers\admin\CandidateController;
 |
 */
 
-Route::get('/dashboard', function () {
-    return view('admin.layouts.admin_master');
-});
+// Route::get('/dashboard', function () {
+//     return view('admin.layouts.firstview');
+// });
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
-    return view('admin.layouts.admin_master');
-})->name('dashboard');
+
+# DASHBOARD
+Route::middleware(['auth:sanctum', 'verified'])->get('/',[DetailController::class,'index'])->name('admin.detail.index');
+
+
+// Route::middleware(['auth:sanctum', 'verified'])->get('/', function () {
+//     return view('admin.layouts.admin_master');
+// })->name('dashboard');
 
 
 # POST
@@ -50,9 +57,13 @@ Route::put('post/edit',[PostController::class,'edit'])->name('admin.post.edit');
 
 Route::get('exportpostdata',[PostController::class,'export'])->name('admin.post.export');
 
+Route::post('getpost',[PostController::class,'getPost'])->name('admin.post.getPost');
+
+
 
 # CANDIDATE
 Route::get('/candidatelist',[CandidateController::class,'index'])->name('admin.candidateindex');
+Route::get('/candidatelist/search',[CandidateController::class,'filterbybothpostname'])->name('admin.candidatefilter');
 
 Route::get('candidate/createview',[CandidateController::class,'createView'])->name('admin.candidate.createview');
 // Route::post('candidate/create',[CandidateController::class,'create'])->name('admin.candidate.create');
@@ -70,6 +81,13 @@ Route::get('exportimg',[CandidateController::class,'exportPhoto'])->name('admin.
 Route::post('getcandidate',[CandidateController::class,'getCandidate'])->name('admin.candidate.getCandidate');
 Route::get('reset',[CandidateController::class,'reset'])->name('admin.candidate.reset');
 
-// Route::get('upload',[CandidateController::class, 'index']);
 Route::post('candidatecreate',[CandidateController::class, 'create'])->name('admin.candidatecreate');
 
+// #videolink
+
+Route::get('viewlink',[LinkApiController::class, 'index'])->name('admin.videolinkindex');
+Route::view('vidlink/createlink', 'admin.videolink.create')->name('admin.videolinkcreateview');
+Route::post('vidlink/created',[LinkApiController::class,'createlink'])->name('admin.videolinkcreate');
+Route::get('vidlink/edit/{id}',[LinkApiController::class,'editForm'])->name('admin.videoeditView');
+Route::post('vidlink/edit/{id}',[LinkApiController::class,'edit'])->name('admin.videolinkedit');
+Route::get('vidlink/delete/{id}',[LinkApiController::class,'delete'])->name('admin.Videolinkdelete');

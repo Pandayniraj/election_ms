@@ -39,15 +39,7 @@
                 </div>
 
                 <div class="right d-flex justify-content-between">
-                   <button class="btn btn-warning mr-2" onclick="window.location.href = '{{ route('admin.post.createview') }}';"><i class="fas fa-plus-square fa-2x mr-2"></i><span style="vertical-align: super;">Add New Post</span></a> </button>
-                
-                   <form action="{{ route('admin.post.getPost') }}" method="POST">
-                        @csrf
-                        <button id="export" class="btn btn-info"  style="padding: 11px;" type="submit">Get Post</button>
-                    </form>    
-                    @if($status==True)
-                        <span data-href="exportpostdata " id="export" class="btn btn-success mx-2" onclick="exportTasks(event.target);" style="padding: 11px;">Export Data</span>
-                    @endif
+                   <button class="btn btn-warning mr-2" onclick="window.location.href = '{{ route('admin.videolinkcreateview') }}';"><i class="fas fa-plus-square fa-2x mr-2"></i><span style="vertical-align: super;">Add New Post</span></a> </button>
                     </div>
             </div>
 
@@ -57,34 +49,40 @@
                   <thead>
                   <tr>
                     <th>S.N.</th>
-                    <th>Post Id</th>
-                    <th>Post Name(Nepali)</th>
-                    <th>Post Name</th>
-                    <th>Max Count</th>
+                    <th>Videolinks</th>
                     <th>Operations</th>
                 </tr>
                   </thead>
                   <tbody>
-                        @foreach($posts as $key=>$post)
-                    <tr>
-                        <td>{{$posts->firstItem() + $key }}</td>
-                        <td>{{ $post['position_id'] }}</td>
-                        <td>{{ $post['nepali_post_name'] }}</td>
-                        <td>{{ $post['post_name'] }}</td>
-                        <td>{{ $post['max_count'] }}</td>
+                        {{-- @foreach($vlinks as $vlink) --}}
+                        {{-- {{$vlink}} --}}
+                        @if($vlinks)
+                            <tr>
+                        <td>{{ $vlinks['id']??''}}</td>
+                        <td>{{ $vlinks['video_link']??''}}</td>
                         <td style="width:15%">
-                            <span><a href="{{ url('post/edit/'.$post['id'])}}"><button><i class="fas fa-edit m-3 fa-1x" ></i></button></a></span>
-                            <span><a href="{{ route('admin.post.delete',$post['id'])}}" id="delete"><i class="fas fa-trash-alt text-danger fa-1x"></i></a></span>
+                             <span><a href="{{ route('admin.videoeditView',$vlinks['id']??'')}}"><button><i class="fas fa-edit m-3 fa-1x" ></i></button></a></span>
+                             <span><a href="{{ route('admin.Videolinkdelete',$vlinks['id']??'')}}" id="delete"><i class="fas fa-trash-alt text-danger fa-1x"></i></a></span> 
                             
                         </td>
                        
                     </tr>
+                        @else
+                               <tr>
+                       
+                        <td></td>
+                         <td>No data</td>
+                        
+                       
+                    </tr> 
+                        @endif
+                    
 
-                 @endforeach
+                 {{-- @endforeach --}}
                
                   </tbody>
                 </table>
-                {{ $posts->links() }}
+                
               </div>
               
               <!-- /.card-body -->
